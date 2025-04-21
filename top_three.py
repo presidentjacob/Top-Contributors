@@ -71,7 +71,7 @@ def get_top_three(all_2022, all_2023, all_2024):
     top_three = sorted(all_total.items(), key=lambda x: x[1], reverse=True)[:3]
     return top_three
 
-def add_to_file(top_three):
+def add_to_file(top_three, all_2022, all_2023, all_2024):
     # Create a workbook and select the active sheet
     wb = openpyxl.Workbook()
     ws = wb.active
@@ -90,7 +90,16 @@ def add_to_file(top_three):
     for col, (name, _) in enumerate(top_three, start=2):
         ws.cell(row=1, column=col, value=name)
 
-    # Add the contributions for each year
+    for col, (name, _) in enumerate(top_three, start=2):
+        ws.cell(row=2, column=col, value=all_2022[name])
+    for col, (name, _) in enumerate(top_three, start=2):
+        ws.cell(row=3, column=col, value=all_2023[name])
+    for col, (name, _) in enumerate(top_three, start=2):
+        ws.cell(row=4, column=col, value=all_2024[name])
+
+    for col, (name, _) in enumerate(top_three, start=2):
+        ws.cell(row=5, column=col, value=name)
+
     
     wb.save('top_three_contributors.xlsx')
 
@@ -103,6 +112,6 @@ def main():
 
     # Get the top three people with the most contributions
     top_three = get_top_three(all_2022, all_2023, all_2024)
-    add_to_file(top_three)
+    add_to_file(top_three, all_2022, all_2023, all_2024)
 
 main()
