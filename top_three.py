@@ -97,8 +97,8 @@ def add_to_file(top_three, all_2022, all_2023, all_2024):
     for col, (name, _) in enumerate(top_three, start=2):
         ws.cell(row=4, column=col, value=all_2024[name])
 
-    for col, (name, _) in enumerate(top_three, start=2):
-        ws.cell(row=5, column=col, value=name)
+    for col, (name, value) in enumerate(top_three, start=2):
+        ws.cell(row=5, column=col, value=value)
 
     
     wb.save('top_three_contributors.xlsx')
