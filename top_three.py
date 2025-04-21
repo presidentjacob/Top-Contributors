@@ -81,9 +81,19 @@ def add_to_file(top_three):
     for i in range(2, 5):
         ws.cell(row=i, column=1, value=f'202{i}')
     ws.cell(row=5, column=1, value='Total')
+
+    '''
+    Add the top three contributors to the sheet
+    Start from column 2 as column 1 is for years
+    Use enumerate to get the column number and the name of the person
+    '''
+    for col, (name, _) in enumerate(top_three, start=2):
+        ws.cell(row=1, column=col, value=name)
+
+    # Add the contributions for each year
     
     wb.save('top_three_contributors.xlsx')
-    
+
 
 def main():
     # Get all people from each year
