@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import openpyxl
 
 # Set all urls
 year_2022 = 'https://openaccess.thecvf.com/CVPR2022?day=all'
@@ -70,6 +71,20 @@ def get_top_three(all_2022, all_2023, all_2024):
     top_three = sorted(all_total.items(), key=lambda x: x[1], reverse=True)[:3]
     return top_three
 
+def add_to_file(top_three):
+    # Create a workbook and select the active sheet
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = 'Top Three Contributors'
+
+    # Add headers to the sheet
+    for i in range(2, 5):
+        ws.cell(row=i, column=1, value=f'202{i}')
+    ws.cell(row=5, column=1, value='Total')
+    
+    wb.save('top_three_contributors.xlsx')
+    
+
 def main():
     # Get all people from each year
     all_2022 = get_url(year_2022)
@@ -78,5 +93,6 @@ def main():
 
     # Get the top three people with the most contributions
     top_three = get_top_three(all_2022, all_2023, all_2024)
-    
+    add_to_file(top_three)
+
 main()
